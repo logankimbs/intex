@@ -1,0 +1,12 @@
+:root {
+    --lightgrey: rgba(0,0,0,.03);
+}
+
+thead {
+    background-color: var(--lightgrey);
+}
+
+.click-prescriber:hover,
+.click-drug:hover {
+    cursor: pointer;
+}
