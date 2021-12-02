@@ -1,3 +1,57 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 <h2>View Prescriber</h2>
+<div class="alert alert-primary" role="alert">
+    John Doe is authorized to prescribe opioids
+</div>
+<div class="card">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Name</dt>
+            <dd class="col-sm-9">John Doe</dd>
+          
+            <dt class="col-sm-3">Gender</dt>
+            <dd class="col-sm-9">Male</dd>
+          
+            <dt class="col-sm-3">State</dt>
+            <dd class="col-sm-9">Utah</dd>
+          
+            <dt class="col-sm-3 text-truncate">National Provider Number</dt>
+            <dd class="col-sm-9">0000000000</dd>
+
+            <dt class="col-sm-3">Credentials</dt>
+            <dd class="col-sm-9">M.D</dd>
+
+            <dt class="col-sm-3 text-truncate">Total Drugs Prescribed</dt>
+            <dd class="col-sm-9">1</dd>
+        </dl>
+    </div>
+    <div class="card-footer">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='{% url 'editprescriber' %}'">Edit</button>
+        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+    </div>
+</div>
+<h3>Drugs Prescribed by John Doe</h3>
+<p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+    ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+    laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+    non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</p>
+<table class="table table-hover table-borderless table-sm">
+    <thead>
+      <tr>
+        <th scope="col">Drug Name</th>
+        <th scope="col">Average</th>
+        <th scope="col">Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr class="click-drug">
+            <th scope="row">Oxycontin</th>
+            <td>12</td>
+            <td>10</td>
+        </tr>
+    </tbody>
+</table>
 {% endblock %}
