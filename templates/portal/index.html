@@ -1,3 +1,11 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
-<h2>Test 2</h2>
-{% endblock %}
+	
+	{% extends 'base.html' %} {% load static %} {% block content %}
+	<h2>Welcome to our page</h2>
+	<br><br>
+	<a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="{% url 'prescribers' %}">Prescribers</a>
+	<br><br>
+    <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="{% url 'drugs' %}">Drugs</a>
+	<br><br>
+	<a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="{% url 'about' %}">Learn More</a>
+	<br><br>
+    {% endblock %}

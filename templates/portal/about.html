@@ -1,0 +1,9 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<h2>This is the about page</h2>
+<br><br>
+<a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="{% url 'index' %}">Home</a>
+<br><br>
+<a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="{% url 'prescribers' %}">Prescribers</a>
+<br><br>
+<a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="{% url 'drugs' %}">Drugs</a>
+{% endblock %}
