@@ -43,14 +43,14 @@
 </p>
 <table class="table table-hover table-borderless table-sm">
     <thead>
-      <tr>
-        <th scope="col">Drug Name</th>
-        <th scope="col">Average</th>
-        <th scope="col">Amount</th>
-      </tr>
+        <tr>
+            <th scope="col">Drug Name</th>
+            <th scope="col">Average</th>
+            <th scope="col">Amount</th>
+        </tr>
     </thead>
     <tbody>
-        <tr class="click-drug">
+        <tr class="click-drug" onclick="location.href='{% url 'viewdrug' %}'">
             <th scope="row">Oxycontin</th>
             <td>12</td>
             <td>10</td>

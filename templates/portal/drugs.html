@@ -10,16 +10,16 @@
 </p>
 <table class="table table-hover table-borderless">
     <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Drug Name</th>
-      </tr>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Drug Name</th>
+        </tr>
     </thead>
     <tbody>
-            <tr class="click-drugs" onclick="location.href='{% url 'viewdrugs' %}'">
-                <th scope="row">000000</th>
-                <td>Heroine</td>
-            </tr>
+        <tr class="click-drug" onclick="location.href='{% url 'viewdrug' %}'">
+            <th scope="row">000000</th>
+            <td>Heroine</td>
+        </tr>
     </tbody>
 </table>
 {% endblock %}
