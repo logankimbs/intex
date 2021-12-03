@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 
 <div class="container">
-    <h2>Edit Prescriber</h2>
+    <h2 class="mb-4">Edit Prescriber</h2>
     <form>
         <div class="row">
             <div class="col">
@@ -75,7 +75,7 @@
             </div>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-4">
             <label for="prescriberOpioidAuthorization" class="form-label">Is this individual authorized to prescribe opioids?</label>
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="prescriberOpioidAuthorization" id="isAuthorized" checked>
@@ -90,9 +90,10 @@
                 </label>
             </div>
         </div>
-
-        <button type="button" class="btn btn-secondary" onclick="location.href='{% url 'prescribers' %}'">Cancel</button>
-        <button type="submit" class="btn btn-success">Update</button>
+        <div class="d-flex justify-content-end gap-2">
+            <button type="button" class="btn btn-secondary" onclick="location.href='{% url 'viewprescriber' %}'">Cancel</button>
+            <button type="submit" class="btn btn-success">Update</button>
+        </div>
     </form>
 </div>
 {% endblock %}
