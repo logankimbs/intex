@@ -1,7 +1,13 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 <div class="container">
-    <h2>Drugs</h2>
-    <input type="text" class="form-control" id="searchPrescribers" placeholder="Seach Drugs">
+    <div class="row">
+        <div class="col">
+            <h2>Drugs</h2>
+        </div>
+        <div class="col offset-md-4">
+            <input type="text" class="form-control" id="searchPrescribers" placeholder="Seach Drugs">
+        </div>
+    </div>
     <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
         ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
@@ -19,7 +25,7 @@
         <tbody>
             <tr class="click-drug" onclick="location.href='{% url 'viewdrug' %}'">
                 <th scope="row">000000</th>
-                <td>Heroine</td>
+                <td>Oxycontin</td>
             </tr>
         </tbody>
     </table>

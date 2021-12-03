@@ -1,8 +1,14 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 <div class="container">
-    <h2>Prescribers</h2>
-    <input type="text" class="form-control" id="searchPrescribers" placeholder="Seach Prescribers">
-    <button type="button" class="btn btn-primary" onclick="location.href='{% url 'createprescriber' %}'">Add</button>
+    <div class="row">
+        <div class="col">
+            <h2>Prescribers</h2>
+        </div>
+        <div class="col d-inline-flex">
+            <input type="text" class="form-control me-3" id="searchPrescribers" placeholder="Seach Prescribers">
+            <button type="button" class="btn btn-primary btn-block" onclick="location.href='{% url 'createprescriber' %}'">Add</button>
+        </div>
+    </div>
     <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
         ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
@@ -15,15 +21,15 @@
         <tr>
             <th scope="col">Prescriber Name</th>
             <th scope="col">Location</th>
-            <th scope="col">Speciality</th>
+            <th scope="col">Specialty</th>
         </tr>
         </thead>
         <tbody>
-                <tr class="click-prescriber" onclick="location.href='{% url 'viewprescriber' %}'">
-                    <th scope="row">John Doe</th>
-                    <td>Utah</td>
-                    <td>Dentist</td>
-                </tr>
+            <tr class="click-prescriber" onclick="location.href='{% url 'viewprescriber' %}'">
+                <th scope="row">John Doe</th>
+                <td>Utah</td>
+                <td>Dentist</td>
+            </tr>
         </tbody>
     </table>
 </div>
