@@ -10,11 +10,11 @@ from .views import viewdrugPageView
 
 urlpatterns = [
     path('', indexPageView, name='index'),
-    path('about/', aboutPageView, name= 'about'),
+    path('about/', aboutPageView, name='about'),
     path('prescribers/', prescribersPageView, name='prescribers'),
     path('viewprescriber/', viewPrescriberPageView, name='viewprescriber'),
     path('editprescriber/', editPrescriberPageView, name='editprescriber'),
     path('createprescriber/', createPrescriberPageView, name='createprescriber'),
-    path('drugs/', drugsPageView, name= 'drugs'),
-    path('viewdrug/', viewdrugPageView, name= 'viewdrugs'),
+    path('drugs/', drugsPageView, name='drugs'),
+    path('viewdrug/', viewdrugPageView, name='viewdrug'),
 ]

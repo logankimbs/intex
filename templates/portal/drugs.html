@@ -1,10 +1,6 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 <h2>Drugs</h2>
 <input type="text" class="form-control" id="searchPrescribers" placeholder="Seach Drugs">
-<br><br>
-<button type="button" class="btn btn-primary" onclick="location.href='{% url 'prescribers' %}'">Prescribers</button>
-<br><br>
-<button type="button" class="btn btn-primary" onclick="location.href='{% url 'index' %}'">Home</button>
 <p>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
     ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
@@ -21,11 +17,13 @@
       </tr>
     </thead>
     <tbody>
-            <tr class="click-drugs" onclick="location.href='{% url 'viewdrugs' %}'">
-                <th scope="row">000000</th>
-                <td>Heroine</td>
-                <td> <img src="{% static 'img/pill' %}"></img></td>
+        {% for drug in drugs %}
+            <tr class="click-drug" onclick="location.href='{% url 'viewdrug' %}'">
+                <th scope="row">{{drug.drugid}}</th>
+                <td>{{drug.drugname}}</td>
+                {% comment %} <td> <img src="{% static 'img/pill' %}"></img></td> {% endcomment %}
             </tr>
+        {% endfor %}
     </tbody>
 </table>
 {% endblock %}
