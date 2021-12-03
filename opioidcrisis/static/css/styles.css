@@ -10,3 +10,7 @@ thead {
 .click-drug:hover {
     cursor: pointer;
 }
+
+#toggle-me {
+    border: none;
+}
