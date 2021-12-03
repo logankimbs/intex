@@ -6,7 +6,7 @@
         </div>
         <div class="col">
             <div class="d-flex">
-                <input type="text" class="form-control me-3" id="searchPrescribers" placeholder="Seach Prescribers">
+                <input type="text" class="form-control me-3" id="searchPrescribers" onkeyup="searchPrescribers()" placeholder="Seach Prescribers">
                 <button type="button" class="btn btn-primary btn-block" onclick="location.href='{% url 'createprescriber' %}'">Add</button>
             </div>
         </div>
@@ -18,7 +18,7 @@
         voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
         non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
     </p>
-    <table class="table table-hover table-borderless">
+    <table id="prescribersTable" class="table table-hover table-borderless">
         <thead>
         <tr>
             <th scope="col">Prescriber Name</th>
@@ -28,7 +28,7 @@
         </thead>
         <tbody>
             <tr class="click-prescriber" onclick="location.href='{% url 'viewprescriber' %}'">
-                <th scope="row">John Doe</th>
+                <td scope="row">John Doe</th>
                 <td>Utah</td>
                 <td>Dentist</td>
             </tr>
