@@ -16,5 +16,5 @@ urlpatterns = [
     path('editprescriber/', editPrescriberPageView, name='editprescriber'),
     path('createprescriber/', createPrescriberPageView, name='createprescriber'),
     path('drugs/', drugsPageView, name='drugs'),
-    path('viewdrug/', viewdrugPageView, name='viewdrug'),
+    path('<str:drugname>/', viewdrugPageView, name='viewdrug'),
 ]
