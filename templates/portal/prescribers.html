@@ -1,12 +1,14 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 <div class="container">
-    <div class="row">
+    <div class="row align-items-center mb-4">
         <div class="col">
             <h2>Prescribers</h2>
         </div>
-        <div class="col d-inline-flex">
-            <input type="text" class="form-control me-3" id="searchPrescribers" placeholder="Seach Prescribers">
-            <button type="button" class="btn btn-primary btn-block" onclick="location.href='{% url 'createprescriber' %}'">Add</button>
+        <div class="col">
+            <div class="d-flex">
+                <input type="text" class="form-control me-3" id="searchPrescribers" placeholder="Seach Prescribers">
+                <button type="button" class="btn btn-primary btn-block" onclick="location.href='{% url 'createprescriber' %}'">Add</button>
+            </div>
         </div>
     </div>
     <p>
