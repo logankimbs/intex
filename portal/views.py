@@ -3,6 +3,8 @@ from django.http import HttpResponse
 
 
 # this page displays our home page
+
+
 def indexPageView(requests):
     return render(requests, 'portal/index.html')
 
