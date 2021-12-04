@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Drugs
+import re
 
 
 # this page displays our home page
@@ -39,11 +40,18 @@ def createPrescriberPageView(requests):
 def drugsPageView(requests):
     drugs = Drugs.objects.all()
 
+    # convert all caps to normal
+    text = 'AMLODIPINE.BESYLATE.BENAZEPRIL'.lower()
+    punc_filter = re.compile('([.!?]\s*)')
+    split_with_punctuation = punc_filter.split(text)
+    final = ''.join([i.capitalize() for i in split_with_punctuation])
+    print(final)
+
     return render(requests, 'portal/drugs.html', {'drugs': drugs})
 
 
 # this page shows a detailed view of a specific drug
 def viewdrugPageView(requests, drugname):
-    context = {"drug": drugname}
+    drug = Drugs.objects.get(drugname=drugname)
 
-    return render(requests, 'portal/viewdrug.html', context)
+    return render(requests, 'portal/viewdrug.html', {'drug': drug})
