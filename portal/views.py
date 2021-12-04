@@ -66,7 +66,9 @@ def createPrescriberPageView(request):
 
 # this page displays all drugs in a table
 def drugsPageView(request):
-    return render(request, 'portal/drugs.html')
+    drugs = Drugs.objects.all()
+
+    return render(request, 'portal/drugs.html', {'drugs': drugs})
 
 
 # this page shows a detailed view of a specific drug
