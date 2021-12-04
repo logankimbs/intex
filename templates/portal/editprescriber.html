@@ -24,8 +24,8 @@
                 <div class="mb-3">
                     <label for="prescriberGender" class="form-label">Gender</label>
                     <select class="form-select" id="prescriberGender" aria-label="gender of prescriber">
-                        <option value="M">Male</option>
-                        <option value="F">Female</option>
+                        <option value="M" {% if prescriber.gender.lower == 'm' %} selected {% endif %}>Male</option>
+                        <option value="F" {% if prescriber.gender.lower == 'f' %} selected {% endif %}>Female</option>
                     </select>
                 </div>
             </div>

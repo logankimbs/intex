@@ -2,19 +2,20 @@
 
 <div class="container">
     <h2 class="mb-4">Create Prescriber</h2>
-    <form>
+    <form name="form" method="post" action="{% url 'createprescriber' %}">
+        {% csrf_token %}
         <div class="row">
             <div class="col">
                 <div class="mb-3">
                     <label for="prescriberFirstName" class="form-label">First Name</label>
-                    <input type="text" class="form-control" id="prescriberFirstName">
+                    <input type="text" class="form-control" name="prescriberFirstName">
                 </div>
             </div>
             
             <div class="col">
                 <div class="mb-3">
                     <label for="prescriberLastName" class="form-label">Last Name</label>
-                    <input type="text" class="form-control" id="prescriberLastName">
+                    <input type="text" class="form-control" name="prescriberLastName">
                 </div>
             </div>
         </div>
@@ -23,10 +24,10 @@
             <div class="col">
                 <div class="mb-3">
                     <label for="prescriberGender" class="form-label">Gender</label>
-                    <select class="form-select" id="prescriberGender" aria-label="gender of prescriber">
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                    <select class="form-select" name="prescriberGender" aria-label="gender of prescriber">
+                        <option value="" disabled selected>None</option>
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
                     </select>
                 </div>
             </div>
@@ -34,10 +35,11 @@
             <div class="col">
                 <div class="mb-3">
                     <label for="prescriberState" class="form-label">State</label>
-                    <select class="form-select" id="prescriberState" aria-label="state of prescriber">
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                    <select class="form-select" name="prescriberState" aria-label="state of prescriber">
+                        <option value="" disabled selected>None</option>
+                        {% for state in states %}
+                            <option value="{{state.stateabbrev}}">{{state.stateabbrev}}</option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>
@@ -47,14 +49,15 @@
             <div class="col">
                 <div class="mb-3">
                     <label for="prescriberNPI" class="form-label">National Provider Number</label>
-                    <input type="text" class="form-control" id="prescriberNPI">
+                    <input type="text" class="form-control" name="prescriberNPI" aria-describedby="npiHelp" required>
+                    <div name="npiHelp" class="form-text">A National Provider Identifier is a unique 10-digit identification number issued to health care providers</div>
                 </div>
             </div>
 
             <div class="col">
                 <div class="mb-3">
                     <label for="prescriberCredentials" class="form-label">Credentials</label>
-                    <input type="text" class="form-control" id="prescriberCredentials">
+                    <input type="text" class="form-control" name="prescriberCredentials">
                 </div>
             </div>
         </div>
@@ -63,32 +66,25 @@
             <div class="col">
                 <div class="mb-3">
                     <label for="prescriberSpecialty" class="form-label">Specialty</label>
-                    <input type="text" class="form-control" id="prescriberSpecialty">
+                    <input type="text" class="form-control" name="prescriberSpecialty">
                 </div>
             </div>
             
             <div class="col">
                 <div class="mb-3">
                     <label for="prescriberTotalPrescriptions" class="form-label">Total Drugs Prescribed</label>
-                    <input type="text" class="form-control" id="prescriberTotalPrescriptions">
+                    <input type="text" class="form-control" name="prescriberTotalPrescriptions">
                 </div>
             </div>
         </div>
 
         <div class="mb-4">
             <label for="prescriberOpioidAuthorization" class="form-label">Is this individual authorized to prescribe opioids?</label>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="prescriberOpioidAuthorization" id="isAuthorized" checked>
-                <label class="form-check-label" for="isAuthorized">
-                Yes
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="prescriberOpioidAuthorization" id="isNotAuthorized">
-                <label class="form-check-label" for="isNotAuthorized">
-                No
-                </label>
-            </div>
+            <select class="form-select" name="authorization" aria-label="opioid authorization" required>
+                <option value="" disabled selected>None</option>
+                <option value="TRUE">True</option>
+                <option value="FALSE">False</option>
+            </select>
         </div>
         <div class="d-flex justify-content-end gap-2">
             <button type="button" class="btn btn-secondary" onclick="location.href='{% url 'prescribers' %}'">Cancel</button>
