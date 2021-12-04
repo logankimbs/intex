@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'opioidcrisis.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'intex',
+        'NAME': 'intex-for-real',
         'USER': 'postgres',
         'PASSWORD': os.getenv('postgresql_password'),
         'HOST': 'localhost'
