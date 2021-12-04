@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import Drugs
 
 
 # this page displays our home page
@@ -36,7 +37,9 @@ def createPrescriberPageView(requests):
 
 # this page displays all drugs in a table
 def drugsPageView(requests):
-    return render(requests, 'portal/drugs.html')
+    drugs = Drugs.objects.all()
+
+    return render(requests, 'portal/drugs.html', {'drugs': drugs})
 
 
 # this page shows a detailed view of a specific drug

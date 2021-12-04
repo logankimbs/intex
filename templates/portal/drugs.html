@@ -23,10 +23,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="click-drug" onclick="location.href='/oxycontin'">
-                <td>Oxycontin</th>
-                <td>True</td>
-            </tr>
+            {% for drug in drugs %}
+                <tr class="click-drug" onclick="location.href='/{{drug.drugname}}'">
+                    <td>{{drug.drugname}}</th>
+                    <td>{{drug.isopioid.capitalize}}</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 </div>
