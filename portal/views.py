@@ -1,12 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Drugs
+from .models import Drugs, Prescribers
 import re
 
 
 # this page displays our home page
-
-
 def indexPageView(requests):
     return render(requests, 'portal/index.html')
 
@@ -18,12 +16,23 @@ def aboutPageView(requests):
 
 # this page displays all prescribers in a table
 def prescribersPageView(requests):
-    return render(requests, 'portal/prescribers.html')
+    prescriber = Prescribers.objects.all()
+
+    return render(requests, 'portal/prescribers.html', {'prescriber': prescriber})
 
 
 # this page shows a detailed view of a specific prescriber
-def viewPrescriberPageView(requests):
-    return render(requests, 'portal/viewprescriber.html')
+def viewPrescriberPageView(requests, npi):
+    prescriber = Prescribers.objects.get(npi=npi)
+
+    # convert all caps to normal
+    text = 'AMLODIPINE.BESYLATE.BENAZEPRIL'.lower()
+    punc_filter = re.compile('([.!?]\s*)')
+    split_with_punctuation = punc_filter.split(text)
+    final = ''.join([i.capitalize() for i in split_with_punctuation])
+    print(final)
+
+    return render(requests, 'portal/viewprescriber.html', {'prescriber': prescriber})
 
 
 # this page allows user to edit a specific prescriber
