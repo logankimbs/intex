@@ -4,9 +4,10 @@ function searchPrescribers() {
 
     for (var i = 0; i < rows.length; i++) {
         var firstCol = rows[i].cells[0].textContent.toUpperCase(); // name
-        var secondCol = rows[i].cells[1].textContent.toUpperCase(); // location
-        var thirdCol = rows[i].cells[2].textContent.toUpperCase(); // specialty
-        if (firstCol.indexOf(filter) > -1 || secondCol.indexOf(filter) > -1 || thirdCol.indexOf(filter) > -1) {
+        var secondCol = rows[i].cells[1].textContent.toUpperCase(); // gender
+        var thirdCol = rows[i].cells[2].textContent.toUpperCase(); // credentials
+        var fourthCol = rows[i].cells[3].textContent.toUpperCase(); // credentials
+        if (firstCol.indexOf(filter) > -1 || secondCol.indexOf(filter) > -1 || thirdCol.indexOf(filter) > -1 || fourthCol.indexOf(filter) > -1) {
             rows[i].style.display = "";
         } else {
             rows[i].style.display = "none";

@@ -16,8 +16,8 @@ def aboutPageView(request):
 
 # this page displays all prescribers in a table
 def prescribersPageView(request):
-    prescribers = Prescribers.objects.all()
-
+    prescribers = Prescribers.objects.values(
+        'npi', 'fname', 'lname', 'gender', 'state_id', 'specialty')
     return render(request, 'portal/prescribers.html', {'prescribers': prescribers})
 
 
