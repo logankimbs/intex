@@ -72,5 +72,7 @@ def drugsPageView(request):
 
 
 # this page shows a detailed view of a specific drug
-def viewdrugPageView(request):
-    return render(request, 'portal/viewdrug.html')
+def viewdrugPageView(request, drugname):
+    drug = Drugs.objects.get(drugname=drugname)
+
+    return render(request, 'portal/viewdrug.html', {'drug': drug})
