@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Drugs, Prescribers
+from .models import Drugs, Prescribers, State
 import re
 
 
@@ -16,28 +16,24 @@ def aboutPageView(requests):
 
 # this page displays all prescribers in a table
 def prescribersPageView(requests):
-    prescriber = Prescribers.objects.all()
+    prescribers = Prescribers.objects.all()
 
-    return render(requests, 'portal/prescribers.html', {'prescriber': prescriber})
+    return render(requests, 'portal/prescribers.html', {'prescribers': prescribers})
 
 
 # this page shows a detailed view of a specific prescriber
 def viewPrescriberPageView(requests, npi):
     prescriber = Prescribers.objects.get(npi=npi)
 
-    # convert all caps to normal
-    text = 'AMLODIPINE.BESYLATE.BENAZEPRIL'.lower()
-    punc_filter = re.compile('([.!?]\s*)')
-    split_with_punctuation = punc_filter.split(text)
-    final = ''.join([i.capitalize() for i in split_with_punctuation])
-    print(final)
-
     return render(requests, 'portal/viewprescriber.html', {'prescriber': prescriber})
 
 
 # this page allows user to edit a specific prescriber
-def editPrescriberPageView(requests):
-    return render(requests, 'portal/editprescriber.html')
+def editPrescriberPageView(requests, npi, fname, lname):
+    prescriber = Prescribers.objects.get(npi=npi)
+    states = State.objects.all()
+
+    return render(requests, 'portal/editprescriber.html', {'prescriber': prescriber, 'states': states})
 
 
 # this page allows user to create a prescriber
@@ -47,20 +43,9 @@ def createPrescriberPageView(requests):
 
 # this page displays all drugs in a table
 def drugsPageView(requests):
-    drugs = Drugs.objects.all()
-
-    # convert all caps to normal
-    text = 'AMLODIPINE.BESYLATE.BENAZEPRIL'.lower()
-    punc_filter = re.compile('([.!?]\s*)')
-    split_with_punctuation = punc_filter.split(text)
-    final = ''.join([i.capitalize() for i in split_with_punctuation])
-    print(final)
-
-    return render(requests, 'portal/drugs.html', {'drugs': drugs})
+    return render(requests, 'portal/drugs.html')
 
 
 # this page shows a detailed view of a specific drug
-def viewdrugPageView(requests, drugname):
-    drug = Drugs.objects.get(drugname=drugname)
-
-    return render(requests, 'portal/viewdrug.html', {'drug': drug})
+def viewdrugPageView(requests):
+    return render(requests, 'portal/viewdrug.html')

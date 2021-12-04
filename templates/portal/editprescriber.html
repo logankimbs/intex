@@ -7,14 +7,14 @@
             <div class="col">
                 <div class="mb-3">
                     <label for="prescriberFirstName" class="form-label">First Name</label>
-                    <input type="text" class="form-control" id="prescriberFirstName" value="John">
+                    <input type="text" class="form-control" id="prescriberFirstName" value="{{prescriber.fname}}">
                 </div>
             </div>
             
             <div class="col">
                 <div class="mb-3">
                     <label for="prescriberLastName" class="form-label">Last Name</label>
-                    <input type="text" class="form-control" id="prescriberLastName" value="Doe">
+                    <input type="text" class="form-control" id="prescriberLastName" value="{{prescriber.lname}}">
                 </div>
             </div>
         </div>
@@ -24,9 +24,8 @@
                 <div class="mb-3">
                     <label for="prescriberGender" class="form-label">Gender</label>
                     <select class="form-select" id="prescriberGender" aria-label="gender of prescriber">
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
                     </select>
                 </div>
             </div>
@@ -35,9 +34,9 @@
                 <div class="mb-3">
                     <label for="prescriberState" class="form-label">State</label>
                     <select class="form-select" id="prescriberState" aria-label="state of prescriber">
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                        {% for state in states %}
+                            <option value="{{state.stateabbrev}}">{{state.stateabbrev}}</option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>
@@ -47,7 +46,7 @@
             <div class="col">
                 <div class="mb-3">
                     <label for="prescriberNPI" class="form-label">National Provider Number</label>
-                    <input type="text" class="form-control" id="prescriberNPI" value="0000000000" disabled>
+                    <input type="text" class="form-control" id="prescriberNPI" value="{{prescriber.npi}}" disabled>
                 </div>
             </div>
 
@@ -63,14 +62,14 @@
             <div class="col">
                 <div class="mb-3">
                     <label for="prescriberSpecialty" class="form-label">Specialty</label>
-                    <input type="text" class="form-control" id="prescriberSpecialty" value="Dentist">
+                    <input type="text" class="form-control" id="prescriberSpecialty" value="{{prescriber.specialty}}">
                 </div>
             </div>
             
             <div class="col">
                 <div class="mb-3">
                     <label for="prescriberTotalPrescriptions" class="form-label">Total Drugs Prescribed</label>
-                    <input type="text" class="form-control" id="prescriberTotalPrescriptions" value='1'>
+                    <input type="text" class="form-control" id="prescriberTotalPrescriptions" value='{{prescriber.totalprescriptions}}'>
                 </div>
             </div>
         </div>
@@ -78,20 +77,20 @@
         <div class="mb-4">
             <label for="prescriberOpioidAuthorization" class="form-label">Is this individual authorized to prescribe opioids?</label>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="prescriberOpioidAuthorization" id="isAuthorized" checked>
+                <input class="form-check-input" type="radio" name="prescriberOpioidAuthorization" id="isAuthorized" {% if prescriber.isopioidprescriber.lower == 'true' %} checked {% endif %}>
                 <label class="form-check-label" for="isAuthorized">
                 Yes
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="prescriberOpioidAuthorization" id="isNotAuthorized">
+                <input class="form-check-input" type="radio" name="prescriberOpioidAuthorization" id="isNotAuthorized" {% if prescriber.isopioidprescriber.lower == 'false' %} checked {% endif %}>
                 <label class="form-check-label" for="isNotAuthorized">
                 No
                 </label>
             </div>
         </div>
         <div class="d-flex justify-content-end gap-2">
-            <button type="button" class="btn btn-secondary" onclick="location.href='{% url 'viewprescriber' %}'">Cancel</button>
+            <button type="button" class="btn btn-secondary" onclick="location.href='/{{prescriber.npi}}'">Cancel</button>
             <button type="submit" class="btn btn-success">Update</button>
         </div>
     </form>

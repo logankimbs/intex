@@ -28,7 +28,7 @@
         </tr>
         </thead>
         <tbody>
-            {% for prescriber in prescriber %}
+            {% for prescriber in prescribers %}
             <tr class="click-prescriber" onclick="location.href='/{{prescriber.npi}}'">
                 <td scope="row">{{prescriber.fname}} {{prescriber.lname}}</th>
                 <td scope="row">

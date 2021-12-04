@@ -47,11 +47,11 @@
             </dl>
         </div>
         <div class="card-footer d-flex justify-content-end gap-2">
-            <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='{% url 'editprescriber' %}'">Edit</button>
+            <button type="button" class="btn btn-secondary btn-sm" value="Click Me" name="editPrescriber" onclick="location.href='{% url 'editprescriber' npi=prescriber.npi fname=prescriber.fname lname=prescriber.lname %}'">Edit</button>
             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
         </div>
     </div>
-    <h3 class="mb-3">Drugs Prescribed by John Doe</h3>
+    <h3 class="mb-3">Drugs Prescribed by {{prescriber.fname}} {{prescriber.lname}}</h3>
     <table class="table table-hover table-borderless table-sm">
         <thead>
             <tr>
