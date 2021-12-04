@@ -1,21 +1,22 @@
 function searchPrescribers() {
-    var filter = event.target.value.toUpperCase();
-    var rows = document.querySelector("#prescribersTable tbody").rows;
-
-    for (var i = 0; i < rows.length; i++) {
-        var firstCol = rows[i].cells[0].textContent.toUpperCase(); // name
-        var secondCol = rows[i].cells[1].textContent.toUpperCase(); // gender
-        var thirdCol = rows[i].cells[2].textContent.toUpperCase(); // credentials
-        var fourthCol = rows[i].cells[3].textContent.toUpperCase(); // credentials
-        if (firstCol.indexOf(filter) > -1 || secondCol.indexOf(filter) > -1 || thirdCol.indexOf(filter) > -1 || fourthCol.indexOf(filter) > -1) {
-            rows[i].style.display = "";
-        } else {
-            rows[i].style.display = "none";
+    var filter = searchBox.value.toUpperCase();
+    for (var rowI = 0; rowI < trs.length; rowI++) {
+        var tds = trs[rowI].getElementsByTagName("td");
+        trs[rowI].style.display = "none";
+        for (var cellI = 0; cellI < tds.length; cellI++) {
+            if (tds[cellI].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                trs[rowI].style.display = "";
+                continue;
+            }
         }
     }
 }
 
-document.querySelector('#searchPrescribers').addEventListener('keyup', filterTable, false);
+const searchBox = document.getElementById('searchPrescribers');
+const table = document.getElementById("prescribersTable");
+const trs = table.tBodies[0].getElementsByTagName("tr");
+
+searchBox.addEventListener('keyup', searchPrescribers);
 
 
 function searchDrugs() {
