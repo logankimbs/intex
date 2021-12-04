@@ -21,14 +21,14 @@
     <table id="prescribersTable" class="table table-hover table-borderless">
         <thead>
         <tr>
-            <th scope="col">Prescriber Name</th>
+            <th scope="col">Name</th>
             <th scope="col">Gender</th>
             <th scope="col">Location</th>
             <th scope="col">Specialty</th>
         </tr>
         </thead>
         <tbody>
-            {% for prescriber in prescriber %}
+            {% for prescriber in prescribers %}
             <tr class="click-prescriber" onclick="location.href='/{{prescriber.npi}}'">
                 <td scope="row">{{prescriber.fname}} {{prescriber.lname}}</th>
                 <td scope="row">
@@ -38,7 +38,7 @@
                         Female
                     {% endif %}
                 </th>
-                <td>{{prescriber.state.state}}</td>
+                <td>{{prescriber.state_id}}</td>
                 <td>{{prescriber.specialty}}</td>
             </tr>
             {% endfor %}

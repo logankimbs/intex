@@ -1,66 +1,76 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Drugs, Prescribers
+from .models import Drugs, Prescribers, State
 import re
 
 
 # this page displays our home page
-def indexPageView(requests):
-    return render(requests, 'portal/index.html')
+def indexPageView(request):
+    return render(request, 'portal/index.html')
 
 
 # this page displays extra info about the opioid epidemic and prescribers of opioids
-def aboutPageView(requests):
-    return render(requests, 'portal/about.html')
+def aboutPageView(request):
+    return render(request, 'portal/about.html')
 
 
 # this page displays all prescribers in a table
-def prescribersPageView(requests):
-    prescriber = Prescribers.objects.all()
-
-    return render(requests, 'portal/prescribers.html', {'prescriber': prescriber})
+def prescribersPageView(request):
+    prescribers = Prescribers.objects.values(
+        'npi', 'fname', 'lname', 'gender', 'state_id', 'specialty')
+    return render(request, 'portal/prescribers.html', {'prescribers': prescribers})
 
 
 # this page shows a detailed view of a specific prescriber
-def viewPrescriberPageView(requests, npi):
+def viewPrescriberPageView(request, npi):
     prescriber = Prescribers.objects.get(npi=npi)
 
-    # convert all caps to normal
-    text = 'AMLODIPINE.BESYLATE.BENAZEPRIL'.lower()
-    punc_filter = re.compile('([.!?]\s*)')
-    split_with_punctuation = punc_filter.split(text)
-    final = ''.join([i.capitalize() for i in split_with_punctuation])
-    print(final)
-
-    return render(requests, 'portal/viewprescriber.html', {'prescriber': prescriber})
+    return render(request, 'portal/viewprescriber.html', {'prescriber': prescriber})
 
 
 # this page allows user to edit a specific prescriber
-def editPrescriberPageView(requests):
-    return render(requests, 'portal/editprescriber.html')
+def editPrescriberPageView(request, npi, fname, lname):
+    prescriber = Prescribers.objects.get(npi=npi)
+    states = State.objects.all()
+
+    return render(request, 'portal/editprescriber.html', {'prescriber': prescriber, 'states': states})
 
 
 # this page allows user to create a prescriber
-def createPrescriberPageView(requests):
-    return render(requests, 'portal/createprescriber.html')
+def createPrescriberPageView(request):
+    states = State.objects.all()
+
+    if request.method == 'POST':
+        npi = int(request.POST.get('prescriberNPI'))
+        state = State.objects.get(
+            stateabbrev=request.POST.get('prescriberState'))
+
+        # does npi exist
+        if not Prescribers.objects.filter(npi=npi).exists():
+            new_prescriber = Prescribers()
+            new_prescriber.npi = npi
+            new_prescriber.fname = request.POST.get('prescriberFirstName')
+            new_prescriber.lname = request.POST.get('prescriberLastName')
+            new_prescriber.gender = request.POST.get('prescriberGender')
+            new_prescriber.state = state
+            new_prescriber.npi = npi
+            new_prescriber.specialty = request.POST.get('prescriberSpecialty')
+            new_prescriber.totalprescriptions = request.POST.get(
+                'prescriberTotalPrescriptions')
+            new_prescriber.isopioidprescriber = request.POST.get(
+                'authorization')
+            new_prescriber.save()
+
+    return render(request, 'portal/createprescriber.html', {'states': states})
 
 
 # this page displays all drugs in a table
-def drugsPageView(requests):
+def drugsPageView(request):
     drugs = Drugs.objects.all()
 
-    # convert all caps to normal
-    text = 'AMLODIPINE.BESYLATE.BENAZEPRIL'.lower()
-    punc_filter = re.compile('([.!?]\s*)')
-    split_with_punctuation = punc_filter.split(text)
-    final = ''.join([i.capitalize() for i in split_with_punctuation])
-    print(final)
-
-    return render(requests, 'portal/drugs.html', {'drugs': drugs})
+    return render(request, 'portal/drugs.html', {'drugs': drugs})
 
 
 # this page shows a detailed view of a specific drug
-def viewdrugPageView(requests, drugname):
-    drug = Drugs.objects.get(drugname=drugname)
-
-    return render(requests, 'portal/viewdrug.html', {'drug': drug})
+def viewdrugPageView(request):
+    return render(request, 'portal/viewdrug.html')
