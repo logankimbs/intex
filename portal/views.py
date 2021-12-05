@@ -1,3 +1,4 @@
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Drugs, Prescribers, State
@@ -30,6 +31,22 @@ def viewPrescriberPageView(request, npi):
 
 # this page allows user to edit a specific prescriber
 def editPrescriberPageView(request, npi, fname, lname):
+    if request.method == 'POST':
+        updated_prescriber = Prescribers.objects.get(npi=npi)
+        updated_prescriber.fname = request.POST.get('prescriberFirstName')
+        updated_prescriber.lname = request.POST.get('prescriberLastName')
+        updated_prescriber.gender = request.POST.get('prescriberGender')
+        updated_prescriber.state = State.objects.get(
+            stateabbrev=request.POST.get('prescriberState'))
+        updated_prescriber.specialty = request.POST.get('prescriberSpecialty')
+        updated_prescriber.totalprescriptions = request.POST.get(
+            'prescriberTotalPrescriptions')
+        updated_prescriber.isopioidprescriber = request.POST.get(
+            'authorization')
+        updated_prescriber.save()
+
+        return HttpResponseRedirect(f"/{npi}")
+
     prescriber = Prescribers.objects.get(npi=npi)
     states = State.objects.all()
 
