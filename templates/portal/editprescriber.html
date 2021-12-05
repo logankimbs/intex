@@ -36,7 +36,11 @@
                     <label for="prescriberState" class="form-label">State</label>
                     <select class="form-select" name="prescriberState" aria-label="state of prescriber">
                         {% for state in states %}
-                            <option value="{{state.stateabbrev}}">{{state.stateabbrev}}</option>
+                            {% if prescriber.state_id == state.stateabbrev %}
+                                <option value="{{state.stateabbrev}}" selected>{{state.stateabbrev}}</option>
+                            {% else %}
+                                <option value="{{state.stateabbrev}}">{{state.stateabbrev}}</option>
+                            {% endif %}
                         {% endfor %}
                     </select>
                 </div>
