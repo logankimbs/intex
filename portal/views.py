@@ -26,6 +26,15 @@ def prescribersPageView(request):
 def viewPrescriberPageView(request, npi):
     prescriber = Prescribers.objects.get(npi=npi)
 
+    if request.method == 'POST':
+
+        # delete prescriber
+        if 'deletePrescriber' in request.POST:
+            Prescribers.objects.filter(npi=npi).delete()
+
+            # take user back to prescribers page
+            return HttpResponseRedirect(f"/prescribers/")
+
     return render(request, 'portal/viewprescriber.html', {'prescriber': prescriber})
 
 
