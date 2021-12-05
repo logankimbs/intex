@@ -1,3 +1,4 @@
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Drugs, Prescribers, State
@@ -25,11 +26,36 @@ def prescribersPageView(request):
 def viewPrescriberPageView(request, npi):
     prescriber = Prescribers.objects.get(npi=npi)
 
+    if request.method == 'POST':
+
+        # delete prescriber
+        if 'deletePrescriber' in request.POST:
+            Prescribers.objects.filter(npi=npi).delete()
+
+            # take user back to prescribers page
+            return HttpResponseRedirect(f"/prescribers/")
+
     return render(request, 'portal/viewprescriber.html', {'prescriber': prescriber})
 
 
 # this page allows user to edit a specific prescriber
 def editPrescriberPageView(request, npi, fname, lname):
+    if request.method == 'POST':
+        updated_prescriber = Prescribers.objects.get(npi=npi)
+        updated_prescriber.fname = request.POST.get('prescriberFirstName')
+        updated_prescriber.lname = request.POST.get('prescriberLastName')
+        updated_prescriber.gender = request.POST.get('prescriberGender')
+        updated_prescriber.state = State.objects.get(
+            stateabbrev=request.POST.get('prescriberState'))
+        updated_prescriber.specialty = request.POST.get('prescriberSpecialty')
+        updated_prescriber.totalprescriptions = request.POST.get(
+            'prescriberTotalPrescriptions')
+        updated_prescriber.isopioidprescriber = request.POST.get(
+            'authorization')
+        updated_prescriber.save()
+
+        return HttpResponseRedirect(f"/{npi}")
+
     prescriber = Prescribers.objects.get(npi=npi)
     states = State.objects.all()
 

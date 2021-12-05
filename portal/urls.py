@@ -8,6 +8,7 @@ from .views import createPrescriberPageView
 from .views import drugsPageView
 from .views import viewdrugPageView
 
+
 urlpatterns = [
     path('about/', aboutPageView, name='about'),
     path('prescribers/', prescribersPageView, name='prescribers'),
