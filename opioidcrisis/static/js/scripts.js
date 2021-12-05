@@ -1,4 +1,4 @@
-function searchPrescribers() {
+function searchTable() {
     var filter = searchBox.value.toUpperCase();
     for (var rowI = 0; rowI < trs.length; rowI++) {
         var tds = trs[rowI].getElementsByTagName("td");
@@ -12,11 +12,11 @@ function searchPrescribers() {
     }
 }
 
-const searchBox = document.getElementById('searchPrescribers');
-const table = document.getElementById("prescribersTable");
+const searchBox = document.getElementById('search');
+const table = document.getElementById("table");
 const trs = table.tBodies[0].getElementsByTagName("tr");
 
-searchBox.addEventListener('keyup', searchPrescribers);
+searchBox.addEventListener('keyup', searchTable);
 
 
 function searchDrugs() {
