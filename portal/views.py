@@ -75,4 +75,9 @@ def drugsPageView(request):
 def viewdrugPageView(request, drugname):
     drug = Drugs.objects.get(drugname=drugname)
 
-    return render(request, 'portal/viewdrug.html', {'drug': drug})
+    # sql to display top 10 prescriber of this drug
+    top_ten = Prescribers.objects.raw(
+        f"SELECT p.npi, CONCAT(p.fname, ' ', p.lname) AS full_name, p.gender, p.state_id, p.specialty, t.qty FROM portal_prescribers p INNER JOIN portal_triple t ON p.npi = t.prescriberid_id WHERE t.drug_id LIKE '{drugname}' ORDER BY qty DESC LIMIT 10"
+    )
+
+    return render(request, 'portal/viewdrug.html', {'drug': drug, 'top_ten': top_ten})
