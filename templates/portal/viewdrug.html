@@ -14,31 +14,31 @@
         non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
     </p>
     <h3 class="mb-3">Top Prescribers of {{drug}}</h3>
-    <table id="prescribersTable" class="table table-hover table-borderless">
-        <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Location</th>
-            <th scope="col">Specialty</th>
-            <th scope="col">Gender</th>
-        </tr>
-        </thead>
-        <tbody>
-            {% for item in top_ten %}
-                <tr class="click-drug" onclick="location.href='/{{item.npi}}'">
-                    <td>{{item.full_name}}</td>
-                    <td>{{item.state_id}}</td>
-                    <td>{{item.specialty}}</td>
-                    <td>
-                        {% if item.gender.lower == 'm' %}
-                            Male
-                        {% else %}
-                            Female
-                        {% endif %}
-                    </td>
+    <div class="table-responsive">
+        <table id="prescribersTable" class="table table-hover table-borderless table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Specialty</th>
+                    <th scope="col">Amount</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for item in top_ten %}
+                    {% if drug.isopioid.lower == 'true' and item.isopioidprescriber.lower == "false" %}
+                        <tr class="click-drug table-danger" onclick="location.href='/{{item.npi}}'">
+                    {% else %}
+                        <tr class="click-drug" onclick="location.href='/{{item.npi}}'">
+                    {% endif %}
+                        <td>{{item.full_name}}</td>
+                        <td>{{item.state_id}}</td>
+                        <td class="text-truncate">{{item.specialty}}</td>
+                        <td>{{item.qty}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %}

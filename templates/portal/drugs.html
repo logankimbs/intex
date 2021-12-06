@@ -14,14 +14,14 @@
             <input type="text" class="form-control" id="searchDrugs" onkeyup="searchDrugs()" placeholder="Seach Drugs">
         </div>
     </div>
-    <p>
+    <p class="mb-3">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
         ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
         laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
         voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
         non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
     </p>
-    <table id="drugsTable" class="table table-hover table-borderless">
+    <table id="drugsTable" class="table table-hover table-borderless table-sm">
         <thead>
             <tr>
                 <th scope="col">Drug Name</th>
@@ -31,12 +31,10 @@
         <tbody>
             {% for drug in drugs %}
                 <tr class="click-drug" onclick="location.href='/{{drug.drugname}}'">
-                    <th>
-                        {{drug.drugname.capitalize}}
-                    </th>
+                    <td>{{drug.drugname}}</td>
                     <td>
                         {% if drug.isopioid == "TRUE" %}
-                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
                         {% endif %}
                     </td>
                 </tr>

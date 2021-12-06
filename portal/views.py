@@ -1,7 +1,7 @@
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Drugs, Prescribers, State
+from .models import Drugs, Prescribers, State, Triple
 import re
 
 
@@ -12,7 +12,25 @@ def indexPageView(request):
 
 # this page displays extra info about the opioid epidemic and prescribers of opioids
 def aboutPageView(request):
-    return render(request, 'portal/about.html')
+    top_drug = Drugs.objects.raw(
+        '''
+        select id, drug_id, qty
+        from portal_triple
+        where qty = (
+            select qty
+            from portal_triple
+            where drug_id in (
+                select drugname
+                from portal_drugs
+                where isOpioid like 'TRUE'
+            )
+            group by qty
+            order by qty desc
+            limit 1
+        )
+        '''
+    )
+    return render(request, 'portal/about.html', {'top_drug': top_drug})
 
 
 # this page displays all prescribers in a table
@@ -25,8 +43,23 @@ def prescribersPageView(request):
 # this page shows a detailed view of a specific prescriber
 def viewPrescriberPageView(request, npi):
     prescriber = Prescribers.objects.get(npi=npi)
+    drugs = Triple.objects.raw(
+        f'''
+        SELECT t.id, t.drug_id, d1.average, qty, d.isopioid
+        FROM portal_triple t
+        INNER JOIN portal_prescribers p ON p.npi = t.prescriberid_id
+        INNER JOIN portal_drugs d ON d.drugname = t.drug_id
+        INNER JOIN (
+            SELECT t1.drug_id, round(AVG(qty),2) AS average
+            FROM portal_triple t1
+            GROUP BY t1.drug_id
+        ) AS d1 ON t.drug_id = d1.drug_id
+        WHERE prescriberid_id = {npi}
+        ORDER BY prescriberid_id;
+        '''
+    )
 
-    return render(request, 'portal/viewprescriber.html', {'prescriber': prescriber})
+    return render(request, 'portal/viewprescriber.html', {'prescriber': prescriber, 'drugs': drugs})
 
 
 # this page allows user to edit a specific prescriber
@@ -106,7 +139,14 @@ def viewdrugPageView(request, drugname):
 
     # sql to display top 10 prescriber of this drug
     top_ten = Prescribers.objects.raw(
-        f"SELECT p.npi, CONCAT(p.fname, ' ', p.lname) AS full_name, p.gender, p.state_id, p.specialty, t.qty FROM portal_prescribers p INNER JOIN portal_triple t ON p.npi = t.prescriberid_id WHERE t.drug_id LIKE '{drugname}' ORDER BY qty DESC LIMIT 10"
+        f'''
+        SELECT p.npi, CONCAT(p.fname, ' ', p.lname) AS full_name, p.gender, p.state_id, p.specialty, t.qty, p.isopioidprescriber
+        FROM portal_prescribers p
+        INNER JOIN portal_triple t ON p.npi = t.prescriberid_id
+        WHERE t.drug_id LIKE '{drugname}'
+        ORDER BY qty DESC
+        LIMIT 10
+        '''
     )
 
     return render(request, 'portal/viewdrug.html', {'drug': drug, 'top_ten': top_ten})
