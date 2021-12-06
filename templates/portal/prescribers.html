@@ -1,25 +1,20 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 <div class="container">
 
-    <div class="row align-items-center mb-4">
+    <div class="row align-items-center mb-2">
         <div class="col">
             <h2>Prescribers</h2>
         </div>
-        <div class="col">
-            <div class="d-flex">
-                <input type="text" class="form-control me-3" id="search" onkeyup="searchTable()" placeholder="Seach Prescribers">
-                <button type="button" class="btn btn-primary btn-block" onclick="location.href='{% url 'createprescriber' %}'">Add</button>
-            </div>
-        </div>
+        <p>
+            Prescribers are licenced, registered, and given permission by the U.S to prescribe prescriptions to patients.
+            Listed below is the personal information for each prescriber including their name, specialty, location, gender, and credentials
+        </p>
     </div>
 
-    <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </p>
+    <div class="d-flex mb-4">
+        <input type="text" class="form-control me-3" id="search" onkeyup="searchTable()" placeholder="Seach Prescribers">
+        <button type="button" class="btn btn-primary btn-block" onclick="location.href='{% url 'createprescriber' %}'">Add</button>
+    </div>
 
     <div class="overflow-auto mb-5 myTable" style="max-height: 70vh;">
         <div class="table-responsive">

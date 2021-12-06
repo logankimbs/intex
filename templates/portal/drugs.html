@@ -15,14 +15,6 @@
             <input type="text" class="form-control" id="searchDrugs" onkeyup="searchDrugs()" placeholder="Seach Drugs">
         </div>
     </div>
-    
-    <p class="mb-3">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </p>
 
     <div class="overflow-auto mb-5 myTable" style="max-height: 70vh;">
         <div class="table-responsive">
@@ -36,7 +28,7 @@
                 <tbody>
                     {% for drug in drugs %}
                         <tr class="click-drug" onclick="location.href='/{{drug.drugname}}'">
-                            <td scope="row" class="col-8">{{drug.drugname}}</td>
+                            <td scope="row" class="col-8">{{drug.drugname.lower}}</td>
                             <td scope="row" class="col-4 text-center">
                                 {% if drug.isopioid == "TRUE" %}
                                     <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
