@@ -21,7 +21,7 @@
         voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
         non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
     </p>
-    <table id="drugsTable" class="table table-hover table-borderless">
+    <table id="drugsTable" class="table table-hover table-borderless table-sm">
         <thead>
             <tr>
                 <th scope="col">Drug Name</th>
@@ -31,9 +31,7 @@
         <tbody>
             {% for drug in drugs %}
                 <tr class="click-drug" onclick="location.href='/{{drug.drugname}}'">
-                    <td>
-                        {{drug.drugname}}
-                    </td>
+                    <td>{{drug.drugname}}</td>
                     <td>
                         {% if drug.isopioid == "TRUE" %}
                             <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>

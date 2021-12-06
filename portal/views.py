@@ -1,7 +1,7 @@
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Drugs, Prescribers, State
+from .models import Drugs, Prescribers, State, Triple
 import re
 
 
@@ -43,8 +43,23 @@ def prescribersPageView(request):
 # this page shows a detailed view of a specific prescriber
 def viewPrescriberPageView(request, npi):
     prescriber = Prescribers.objects.get(npi=npi)
+    drugs = Triple.objects.raw(
+        f'''
+        SELECT t.id, t.drug_id, d1.average, qty, d.isopioid
+        FROM portal_triple t
+        INNER JOIN portal_prescribers p ON p.npi = t.prescriberid_id
+        INNER JOIN portal_drugs d ON d.drugname = t.drug_id
+        INNER JOIN (
+            SELECT t1.drug_id, round(AVG(qty),2) AS average
+            FROM portal_triple t1
+            GROUP BY t1.drug_id
+        ) AS d1 ON t.drug_id = d1.drug_id
+        WHERE prescriberid_id = {npi}
+        ORDER BY prescriberid_id;
+        '''
+    )
 
-    return render(request, 'portal/viewprescriber.html', {'prescriber': prescriber})
+    return render(request, 'portal/viewprescriber.html', {'prescriber': prescriber, 'drugs': drugs})
 
 
 # this page allows user to edit a specific prescriber
