@@ -1,7 +1,15 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 <div class="container">
     <h2>About</h2>
-    <h3>Top prescribed drug</h3>
-    {{top_drug.drug_id}}
+    <p>
+        The most prescribed opiod in America is
+        {% for drug in top_drug %}
+            <strong>
+                <a href="/{{drug.drug_id}}">{{drug.drug_id}}</a>
+            </strong>
+            and has been prescribed <strong>{{drug.qty}}</strong>
+        {% endfor %}
+        times.
+    </p>
 </div>
 {% endblock %}

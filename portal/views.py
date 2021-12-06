@@ -12,7 +12,7 @@ def indexPageView(request):
 
 # this page displays extra info about the opioid epidemic and prescribers of opioids
 def aboutPageView(request):
-    top_drug = Drugs.objects.raw(
+    top_drug = Triple.objects.raw(
         '''
         select id, drug_id, qty
         from portal_triple
