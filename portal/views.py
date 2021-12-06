@@ -1,7 +1,7 @@
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Drugs, Prescribers, State, Triple
+from .models import Credentials, Drugs, Prescribers, State, Triple
 import re
 
 
@@ -14,23 +14,21 @@ def indexPageView(request):
 def aboutPageView(request):
     top_drug = Drugs.objects.raw(
         '''
-        select id, drug_id, qty
-        from portal_triple
-        where qty = (
-            select qty
-            from portal_triple
-            where drug_id in (
-                select drugname
-                from portal_drugs
-                where isOpioid like 'TRUE'
-            )
-            group by qty
-            order by qty desc
-            limit 1
-        )
+        select drugname, count(qty) as cqty from portal_drugs pd inner join portal_triple pt on pt.drug_id = pd.drugname  where isOpioid = 'TRUE'
+        group by drugname
+        order by count(qty) desc
+        limit 1
         '''
     )
-    return render(request, 'portal/about.html', {'top_drug': top_drug})
+    drugs = Drugs.objects.raw(
+        '''
+        select drugname, count(qty) as cqty from portal_drugs pd inner join portal_triple pt on pt.drug_id = pd.drugname  where isOpioid = 'TRUE'
+        group by drugname
+        order by count(qty) desc
+        '''
+    )
+
+    return render(request, 'portal/about.html', {'top_drug': top_drug, 'drugs': drugs})
 
 
 # this page displays all prescribers in a table
@@ -92,13 +90,15 @@ def editPrescriberPageView(request, npi, fname, lname):
 
     prescriber = Prescribers.objects.get(npi=npi)
     states = State.objects.all()
+    credentials = Credentials.objects.all()
 
-    return render(request, 'portal/editprescriber.html', {'prescriber': prescriber, 'states': states})
+    return render(request, 'portal/editprescriber.html', {'prescriber': prescriber, 'states': states, 'credentials': credentials})
 
 
 # this page allows user to create a prescriber
 def createPrescriberPageView(request):
     states = State.objects.all()
+    credentials = Credentials.objects.all()
 
     if request.method == 'POST':
         npi = int(request.POST.get('prescriberNPI'))
@@ -123,7 +123,7 @@ def createPrescriberPageView(request):
 
             return HttpResponseRedirect(f"/{npi}")
 
-    return render(request, 'portal/createprescriber.html', {'states': states})
+    return render(request, 'portal/createprescriber.html', {'states': states, 'credentials': credentials})
 
 
 # this page displays all drugs in a table

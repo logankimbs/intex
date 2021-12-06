@@ -1,40 +1,32 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 <div class="container">
+
+    <h1 class="display-4 mb-4">{{drug.drugname.lower}}</h1>
+
     {% if drug.isopioid == "TRUE" %}
-        <div class="alert alert-danger mb-4" role="alert">
-            <strong>Warning:</strong> {{drug.drugname.capitalize}} is an opioid and can lead to addiction.
+        <div class="alert alert-danger mb-5" role="alert">
+            <strong>Warning:</strong> {{drug.drugname.lower}} is an opioid and can lead to addiction.
         </div>
     {% endif %}
-    <h2>{{drug}}</h2>
-    <p class="mb-5">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </p>
-    <h3 class="mb-3">Top Prescribers of {{drug}}</h3>
+    
+    <h3 class="mb-3 text-muted">Top prescribers of <span class='text-dark'>{{drug.drugname.lower}}</span></h3>
     <div class="table-responsive">
         <table id="prescribersTable" class="table table-hover table-borderless table-sm">
             <thead>
                 <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Location</th>
-                    <th scope="col">Specialty</th>
-                    <th scope="col">Amount</th>
+                    <th scope="col" class="col-3">Name</th>
+                    <th scope="col" class="col-5">Specialty</th>
+                    <th scope="col" class="col-2 text-center">Location</th>
+                    <th scope="col" class="col-2 text-center">Amount</th>
                 </tr>
             </thead>
             <tbody>
                 {% for item in top_ten %}
-                    {% if drug.isopioid.lower == 'true' and item.isopioidprescriber.lower == "false" %}
-                        <tr class="click-drug table-danger" onclick="location.href='/{{item.npi}}'">
-                    {% else %}
-                        <tr class="click-drug" onclick="location.href='/{{item.npi}}'">
-                    {% endif %}
-                        <td>{{item.full_name}}</td>
-                        <td>{{item.state_id}}</td>
-                        <td class="text-truncate">{{item.specialty}}</td>
-                        <td>{{item.qty}}</td>
+                    <tr class="click-drug" onclick="location.href='/{{item.npi}}'">
+                        <td scope="row" class="col-3">{{item.full_name}}</td>
+                        <td scope="row" class="col-5 text-truncate">{{item.specialty}}</td>
+                        <td scope="row" class="col-2 text-center">{{item.state_id}}</td>
+                        <td scope="row" class="col-2 text-center">{{item.qty}}</td>
                     </tr>
                 {% endfor %}
             </tbody>

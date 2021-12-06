@@ -57,7 +57,12 @@
             <div class="col">
                 <div class="mb-3">
                     <label for="prescriberCredentials" class="form-label">Credentials</label>
-                    <input type="text" class="form-control" name="prescriberCredentials">
+                    <select class="form-select" name="prescriberCredentials" aria-label="credentials of prescriber">
+                        <option value="" disabled selected>None</option>
+                        {% for credential in credentials %}
+                            <option value="{{credential.id}}">{{credential.credentials}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
         </div>
