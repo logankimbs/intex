@@ -26,8 +26,8 @@
                     <tr>
                         <th scope="col" class="col-3">Name</th>
                         <th scope="col" class="col-3">Specialty</th>
-                        <th scope="col" class="col-3">Location</th>
-                        <th scope="col" class="col-3">Gender</th>
+                        <th scope="col" class="col-3 text-center">Location</th>
+                        <th scope="col" class="col-3 text-center">Gender</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,8 +35,8 @@
                         <tr class="click-prescriber" onclick="location.href='/{{prescriber.npi}}'">
                             <td scope="row" class="col-3">{{prescriber.fname}} {{prescriber.lname}}</td>
                             <td scope="row" class="col-3">{{prescriber.specialty}}</td>
-                            <td scope="row" class="col-3">{{prescriber.state_id}}</td>
-                            <td scope="row" class="col-3">
+                            <td scope="row" class="col-3 text-center">{{prescriber.state_id}}</td>
+                            <td scope="row" class="col-3 text-center">
                                 {% if prescriber.gender.lower == 'm' %}
                                     Male
                                 {% else %}
