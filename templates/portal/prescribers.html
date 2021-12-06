@@ -1,20 +1,23 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 <div class="container">
 
-    <div class="row align-items-center mb-2">
+    <div class="row align-items-center mb-3">
         <div class="col">
             <h2>Prescribers</h2>
         </div>
-        <p>
-            Prescribers are licenced, registered, and given permission by the U.S to prescribe prescriptions to patients.
-            Listed below is the personal information for each prescriber including their name, specialty, location, gender, and credentials
-        </p>
+        <div class="col">
+            <div class="d-flex">
+                <input type="text" class="form-control me-3" id="search" onkeyup="searchTable()" placeholder="Seach Prescribers">
+                <button type="button" class="btn btn-primary btn-block" onclick="location.href='{% url 'createprescriber' %}'">Add</button>
+            </div>
+        </div>
     </div>
 
-    <div class="d-flex mb-4">
-        <input type="text" class="form-control me-3" id="search" onkeyup="searchTable()" placeholder="Seach Prescribers">
-        <button type="button" class="btn btn-primary btn-block" onclick="location.href='{% url 'createprescriber' %}'">Add</button>
-    </div>
+    <p class='mb-4'>
+        Prescribers are licenced, registered, and given permission by the U.S to prescribe prescriptions to patients.
+        Listed below is the personal information for each prescriber including their name, specialty, location, gender, and credentials.
+        You can click on each prescriber to find out more information on them.
+    </p>
 
     <div class="overflow-auto mb-5 myTable" style="max-height: 70vh;">
         <div class="table-responsive">
