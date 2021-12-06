@@ -26,7 +26,11 @@
             </thead>
             <tbody>
                 {% for item in top_ten %}
-                    <tr class="click-drug" onclick="location.href='/{{item.npi}}'">
+                    {% if drug.isopioid.lower == 'true' and item.isopioidprescriber.lower == "false" %}
+                        <tr class="click-drug table-danger" onclick="location.href='/{{item.npi}}'">
+                    {% else %}
+                        <tr class="click-drug" onclick="location.href='/{{item.npi}}'">
+                    {% endif %}
                         <td>{{item.full_name}}</td>
                         <td>{{item.state_id}}</td>
                         <td class="text-truncate">{{item.specialty}}</td>
