@@ -1,20 +1,20 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 <div class="container">
-    <div class="px-4 py-5 my-5 text-center">
-        <h5>It's our turn</h5>
+    <div class="px-2 py-2 my-5 col-sm-9 mt-5">
+        <h1 class="display-6 px-1">It's our turn</h1>
         <h1 class="display-4 fw-bold">To stop the rise of</h1>
         <h1 class="display-4 fw-bold text-muted">opioid related death.</h1>
-        <div class="col-lg-6 mx-auto">
+        <div class="mx-auto">
             <p class="lead mb-4">
                 In 2019, nearly <Strong>71,000</strong> people died from drug overdoses, making it a
                 leading cause of injury-related death in the United States. Of those deaths,
                 over 70% involved a prescription or illicit opioid. Drug overdose deaths
                 continue to increase in the United States.
             </p>
-            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <div class="d-grid gap-2 d-sm-flex">
                 <button type="button" class="btn btn-primary btn-lg px-4 gap-3" onclick="location.href='{% url 'about' %}'">Learn More</button>
             </div>
         </div>
-      </div>
+    </div>
 </div>
 {% endblock %}

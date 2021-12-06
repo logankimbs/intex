@@ -1,15 +1,60 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 <div class="container">
-    <h2>About</h2>
-    <p>
-        The most prescribed opiod in America is
-        {% for drug in top_drug %}
-            <strong>
-                <a href="/{{drug.drug_id}}">{{drug.drug_id}}</a>
-            </strong>
-            and has been prescribed <strong>{{drug.qty}}</strong>
-        {% endfor %}
-        times.
-    </p>
+    <div class="px-4 py-5 my-5">
+        <div class="col-lg-9 mx-auto">
+            <h1 class="display-6">A little about</h1>
+            <h1 class="display-3 fw-bold mb-4">The U.S. Opiate Portal</h1>
+
+            <p class="lead mb-4">
+                The Opioid Epidemic is a current and expanding problem throughout the United States.
+                Data shows that in 2018, a daily average of 192 people died from a drug overdose.
+                132 of those daily deaths were opioid related, which adds up to approximately 68% of
+                the deaths. That ends up being approximately 48,200 deaths a year due to the use of
+                Opioids. Clearly, this is a major issue we are facing and looking to solve in the
+                present day.
+            </p>
+
+            <p class="lead mb-4">
+                In total, there are three main reasons given by the CDC to explain the rise in Opioid
+                overdose deaths over recent years. The first reason is due to increased levels of Opioid
+                prescriptions.  The second reason is the use of Heroine. The last reason is attributed to
+                a market for Synthetic Opioids such as Fentanyl (a mixture of heroin, counterfeit pills,
+                and cocaine).
+            </p>
+
+            <p class="lead mb-4">
+                At the present time, there is no database or website accessible to the public, government,
+                or medical field to see specific information about how many Opioids are being prescribed
+                and who is prescribing on a national level. This is why we have created this website. As a
+                team, we feel that if more prescribers of Opioids could know this information, they would
+                be able to become more aware of how they are prescribing Opioids and be able to help their
+                patients become more accountable with how they are using their prescriptions. We also feel
+                this will help lead to less overdose deaths of Heroine because often Heroin addiction occurs
+                from the use of another opioid beforehand.
+            </p>
+
+            <p class="lead mb-4">
+                Our Team has constructed this web application with many features to share information about
+                the Opioid Epidemic to government officials and prescribers. We created a database that
+                includes information about prescribers, states, drugs, and prescriptions. On our website you
+                can search and see a list of current prescribers. You can add, delete, and edit these
+                prescribers. You are also able to see a list of the drugs each prescriber is prescribing and
+                if they are prescribing on average more Opioids than other doctors. Our website also contains
+                a record of drugs commonly prescribed, lists if they are an Opioid, and shows the top ten
+                prescribers who are prescribing that drug.
+            </p>
+        </div>
+    </div>
 </div>
 {% endblock %}
+
+{% comment %} <p>
+    The most prescribed opiod in America is
+    {% for drug in top_drug %}
+        <strong>
+            <a href="/{{drug.drug_id}}">{{drug.drug_id}}</a>
+        </strong>
+        and has been prescribed <strong>{{drug.qty}}</strong>
+    {% endfor %}
+    times.
+</p> {% endcomment %}
