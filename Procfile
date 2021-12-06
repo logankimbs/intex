@@ -1,0 +1,1 @@
+web: gunicorn opioidcrisis.wsgi
