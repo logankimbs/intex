@@ -47,9 +47,7 @@
             </dl>
         </div>
         <div class="card-footer d-flex justify-content-end gap-2">
-            <button type="button" class="btn btn-secondary btn-sm" value="Click Me" name="editPrescriber" onclick="location.href='{% url 'editprescriber' npi=prescriber.npi fname=prescriber.fname lname=prescriber.lname %}'">Edit</button>
-            {% comment %} <button type="submit" class="btn btn-danger btn-sm">Delete</button> {% endcomment %}
-            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deletePrescriber" data-bs-whatever="{{prescriber}}">Delete</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" value="Click Me" name="editPrescriber" onclick="location.href='{% url 'editprescriber' npi=prescriber.npi fname=prescriber.fname lname=prescriber.lname %}'">Edit</button>
         </div>
     </div>
     <h3 class="mb-3">Drugs Prescribed by {{prescriber.fname}} {{prescriber.lname}}</h3>
