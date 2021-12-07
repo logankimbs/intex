@@ -17,7 +17,7 @@
 
             <h2 class="fw-bold mb-4 pt-2 text-muted">
                 The top prescribed opioid is {% for drug in top_drug %}
-                <a href="/{{drug.drug_id}}" class="text-decoration-none">{{drug.drugname.lower}}</a>
+                <a href="/{{drug.drugname}}" class="text-decoration-none">{{drug.drugname.lower}}</a>
                 and has been prescribed over
                 {{drug.cqty}} times. {% endfor %}
             </h2>
