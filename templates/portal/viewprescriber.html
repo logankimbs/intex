@@ -38,15 +38,23 @@
                     <dd class="col-sm-6">{{prescriber.state.state}}</dd>
         
                     <dt class="col-sm-6">Specialty</dt>
-                    <dd class="col-sm-6">{{prescriber.specialty}}</dd>
+                    <dd class="col-sm-6">
+                        {% if prescriber.specialty == '' %} 
+                            None
+                        {% else %}
+                            {{prescriber.specialty}}
+                        {% endif %}
+                    </dd>
                 
                     <dt class="col-sm-6 text-truncate">National Provider Number</dt>
                     <dd class="col-sm-6">{{prescriber.npi}}</dd>
         
                     <dt class="col-sm-6">Credentials</dt>
                     <dd class="col-sm-6">
-                        {% if prescriber.credentials is null %}
-                            {{prescriber.credentials}}
+                        {% if prescriber.credentials != None %}
+                            {% for credential in prescriber.credentials.all %}
+                                {{credential.credentials}}
+                            {% endfor %}
                         {% else %}
                             None
                         {% endif %}

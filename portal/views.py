@@ -72,7 +72,7 @@ def editPrescriberPageView(request, npi, fname, lname):
 
             return HttpResponseRedirect(f"/prescribers/")
 
-        # update Prescriber
+        # update prescriber
         if 'updatePrescriber' in request.POST:
             updated_prescriber = Prescribers.objects.get(npi=npi)
             updated_prescriber.fname = request.POST.get('prescriberFirstName')
@@ -80,6 +80,12 @@ def editPrescriberPageView(request, npi, fname, lname):
             updated_prescriber.gender = request.POST.get('prescriberGender')
             updated_prescriber.state = State.objects.get(
                 stateabbrev=request.POST.get('prescriberState'))
+
+            # credentials
+            credentials = request.POST.get('prescriberCredentials')
+            if credentials != None:
+                updated_prescriber.credentials.add(credentials)
+
             updated_prescriber.specialty = request.POST.get(
                 'prescriberSpecialty')
             updated_prescriber.totalprescriptions = request.POST.get(
@@ -114,6 +120,7 @@ def createPrescriberPageView(request):
             new_prescriber.fname = request.POST.get('prescriberFirstName')
             new_prescriber.lname = request.POST.get('prescriberLastName')
             new_prescriber.gender = request.POST.get('prescriberGender')
+            # print(request.POST.get('prescriberCredentials'))
             new_prescriber.state = state
             new_prescriber.npi = npi
             new_prescriber.specialty = request.POST.get('prescriberSpecialty')
@@ -121,6 +128,9 @@ def createPrescriberPageView(request):
                 'prescriberTotalPrescriptions')
             new_prescriber.isopioidprescriber = request.POST.get(
                 'authorization')
+            new_prescriber.save()
+            new_prescriber.credentials.add(
+                request.POST.get('prescriberCredentials'))
             new_prescriber.save()
 
             return HttpResponseRedirect(f"/{npi}")
