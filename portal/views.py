@@ -57,7 +57,9 @@ def viewPrescriberPageView(request, npi):
         '''
     )
 
-    return render(request, 'portal/viewprescriber.html', {'prescriber': prescriber, 'drugs': drugs})
+    num_drugs = len(drugs)
+
+    return render(request, 'portal/viewprescriber.html', {'prescriber': prescriber, 'drugs': drugs, 'num_drugs': num_drugs})
 
 
 # this page allows user to edit a specific prescriber

@@ -6,84 +6,94 @@
 </svg>
 
 <div class="container">
-    {% if prescriber.isopioidprescriber.lower == 'true' %}
-        <div class="alert alert-success mb-4" role="alert">
-            {{prescriber.fname}} {{prescriber.lname}} is authorized to prescribe opioids
+    <div class="card mb-5 col-md-8 mx-auto">
+        <div class="card-body">
+            {% if prescriber.isopioidprescriber.lower == 'true' %}
+                <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
+                    {{prescriber.fname}} {{prescriber.lname}} is authorized to prescribe opioids
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% else %}
+                <div class="alert alert-warning alert-dismissible fade show mb-3" role="alert">
+                    {{prescriber.fname}} {{prescriber.lname}} is <strong>NOT</strong> authorized to prescribe opioids
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+            
+            <div class='mx-auto'>
+                <dl class="row p-3">
+                    <dt class="col-sm-6">Name</dt>
+                    <dd class="col-sm-6">{{prescriber.fname}} {{prescriber.lname}}</dd>
+                
+                    <dt class="col-sm-6">Gender</dt>
+                    <dd class="col-sm-6">
+                        {% if prescriber.gender.lower == 'm' %}
+                            Male
+                        {% else %}
+                            Female
+                        {% endif %}
+                    </dd>
+                
+                    <dt class="col-sm-6">State</dt>
+                    <dd class="col-sm-6">{{prescriber.state.state}}</dd>
+        
+                    <dt class="col-sm-6">Specialty</dt>
+                    <dd class="col-sm-6">{{prescriber.specialty}}</dd>
+                
+                    <dt class="col-sm-6 text-truncate">National Provider Number</dt>
+                    <dd class="col-sm-6">{{prescriber.npi}}</dd>
+        
+                    <dt class="col-sm-6">Credentials</dt>
+                    <dd class="col-sm-6">
+                        {% if prescriber.credentials is null %}
+                            {{prescriber.credentials}}
+                        {% else %}
+                            None
+                        {% endif %}
+                    </dd>
+        
+                    <dt class="col-sm-6 text-truncate">Total Drugs Prescribed</dt>
+                    <dd class="col-sm-6">{{prescriber.totalprescriptions}}</dd>
+                </dl>
+                <div class='d-flex justify-content-end'>
+                    <button type="button" class="btn btn-outline-secondary btn-sm align-item-end" value="Click Me" name="editPrescriber" onclick="location.href='{% url 'editprescriber' npi=prescriber.npi fname=prescriber.fname lname=prescriber.lname %}'">Edit</button>
+                </div>
+            </div>
         </div>
+    </div>
+
+    {% if not num_drugs > 0 %}
+        <h3 class="mb-3 text-muted"><span class='text-dark'>{{prescriber.fname}}</span> has not prescribed any drugs yet.</h3>
     {% else %}
-        <div class="alert alert-danger mb-4" role="alert">
-            {{prescriber.fname}} {{prescriber.lname}} is <strong>NOT</strong> authorized to prescribe opioids
+        <h3 class="mb-3 text-muted">Drugs prescribed by <span class='text-dark'>{{prescriber.fname}}</span></h3>
+        <div class="table-responsive">
+            <table class="table table-hover table-borderless table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col" class="col-7">Drug Name</th>
+                        <th scope="col" class="col-2 text-center">Average</th>
+                        <th scope="col" class="col-2 text-center">Amount</th>
+                        <th scope="col" class="col-1"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for drug in drugs %}
+                        <tr class="click-drug" onclick="location.href='/{{drug.drug_id}}'">
+                            <td scope="row" class="col-7">{{drug.drug_id.lower}}</td>
+                            <td scope="row" class="col-2 text-center">{{drug.average}}</td>
+                            <td scope="row" class="col-2 text-center">{{drug.qty}}</td>
+                            <td scope="row" class="col-1">
+                                {% if drug.isopioid == "TRUE" %}
+                                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+                                        <use xlink:href="#exclamation-triangle-fill"/>
+                                    </svg>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     {% endif %}
-
-    <div class="card mb-5">
-        <div class="card-body">
-            <dl class="row">
-                <dt class="col-sm-3">Name</dt>
-                <dd class="col-sm-9">{{prescriber.fname}} {{prescriber.lname}}</dd>
-              
-                <dt class="col-sm-3">Gender</dt>
-                <dd class="col-sm-9">
-                    {% if prescriber.gender.lower == 'm' %}
-                        Male
-                    {% else %}
-                        Female
-                    {% endif %}
-                </dd>
-              
-                <dt class="col-sm-3">State</dt>
-                <dd class="col-sm-9">{{prescriber.state.state}}</dd>
-    
-                <dt class="col-sm-3">Specialty</dt>
-                <dd class="col-sm-9">{{prescriber.specialty}}</dd>
-              
-                <dt class="col-sm-3 text-truncate">National Provider Number</dt>
-                <dd class="col-sm-9">{{prescriber.npi}}</dd>
-    
-                <dt class="col-sm-3">Credentials</dt>
-                <dd class="col-sm-9">
-                    {% if prescriber.credentials is null %}
-                        {{prescriber.credentials}}
-                    {% else %}
-                        None
-                    {% endif %}
-                </dd>
-    
-                <dt class="col-sm-3 text-truncate">Total Drugs Prescribed</dt>
-                <dd class="col-sm-9">{{prescriber.totalprescriptions}}</dd>
-            </dl>
-        </div>
-        <div class="card-footer d-flex justify-content-end gap-2">
-            <button type="button" class="btn btn-outline-secondary btn-sm" value="Click Me" name="editPrescriber" onclick="location.href='{% url 'editprescriber' npi=prescriber.npi fname=prescriber.fname lname=prescriber.lname %}'">Edit</button>
-        </div>
-    </div>
-    
-    <h3 class="mb-3">Drugs Prescribed by {{prescriber.fname}}</h3>
-    <div class="table-responsive">
-        <table class="table table-hover table-borderless table-sm">
-            <thead>
-                <tr>
-                    <th scope="col" class="col-7">Drug Name</th>
-                    <th scope="col" class="col-2">Average</th>
-                    <th scope="col" class="col-2">Amount</th>
-                    <th scope="col" class="col-1"></th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for drug in drugs %}
-                    <tr class="click-drug" onclick="location.href='/{{drug.drug_id}}'">
-                        <td scope="row" class="col-7">{{drug.drug_id}}</td>
-                        <td scope="row" class="col-2">{{drug.average}}</td>
-                        <td scope="row" class="col-2">{{drug.su}}</td>
-                        <td scope="row" class="col-1">
-                            {% if drug.isopioid == "TRUE" %}
-                                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
 </div>
 {% endblock %}
