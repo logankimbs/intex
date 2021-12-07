@@ -8,14 +8,14 @@
             <div class="col">
                 <div class="mb-3">
                     <label for="prescriberFirstName" class="form-label">First Name</label>
-                    <input type="text" class="form-control" name="prescriberFirstName">
+                    <input type="text" class="form-control" name="prescriberFirstName" required>
                 </div>
             </div>
             
             <div class="col">
                 <div class="mb-3">
                     <label for="prescriberLastName" class="form-label">Last Name</label>
-                    <input type="text" class="form-control" name="prescriberLastName">
+                    <input type="text" class="form-control" name="prescriberLastName" required>
                 </div>
             </div>
         </div>
@@ -24,7 +24,7 @@
             <div class="col">
                 <div class="mb-3">
                     <label for="prescriberGender" class="form-label">Gender</label>
-                    <select class="form-select" name="prescriberGender" aria-label="gender of prescriber">
+                    <select class="form-select" name="prescriberGender" aria-label="gender of prescriber" required>
                         <option value="" disabled selected>None</option>
                         <option value="M">Male</option>
                         <option value="F">Female</option>
@@ -35,7 +35,7 @@
             <div class="col">
                 <div class="mb-3">
                     <label for="prescriberState" class="form-label">State</label>
-                    <select class="form-select" name="prescriberState" aria-label="state of prescriber">
+                    <select class="form-select" name="prescriberState" aria-label="state of prescriber" required>
                         <option value="" disabled selected>None</option>
                         {% for state in states %}
                             <option value="{{state.stateabbrev}}">{{state.stateabbrev}}</option>
@@ -57,7 +57,7 @@
             <div class="col">
                 <div class="mb-3">
                     <label for="prescriberCredentials" class="form-label">Credentials</label>
-                    <select class="form-select" name="prescriberCredentials" aria-label="credentials of prescriber">
+                    <select class="form-select" name="prescriberCredentials" aria-label="credentials of prescriber" required>
                         <option value="" disabled selected>None</option>
                         {% for credential in credentials %}
                             <option value="{{credential.id}}">{{credential.credentials}}</option>
@@ -78,7 +78,7 @@
             <div class="col">
                 <div class="mb-3">
                     <label for="prescriberTotalPrescriptions" class="form-label">Total Drugs Prescribed</label>
-                    <input type="number" class="form-control" name="prescriberTotalPrescriptions">
+                    <input type="number" class="form-control" name="prescriberTotalPrescriptions" required>
                 </div>
             </div>
         </div>

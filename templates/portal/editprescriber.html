@@ -59,12 +59,19 @@
                 <div class="mb-3">
                     <label for="prescriberCredentials" class="form-label">Credentials</label>
                     <select class="form-select" name="prescriberCredentials" aria-label="credentials of prescriber">
-                        <option value="" disabled selected>None</option>
+                        <option value="None" disabled selected>None</option>
                         {% for credential in credentials %}
                             <option value="{{credential.id}}">{{credential.credentials}}</option>
                         {% endfor %}
                     </select>
                 </div>
+
+                
+                    {% for credential in prescriber.credentials.all %}
+                        <button type="button" class="btn btn-primary">
+                            Notifications <span class="badge bg-secondary">4</span>
+                        </button>
+                    {% endfor %}
             </div>
         </div>
 
