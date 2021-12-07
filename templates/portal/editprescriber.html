@@ -2,91 +2,67 @@
 
 <div class="container">
     <h2 class="mb-4">Edit Prescriber</h2>
-    <form name="form" method="post" action="{% url 'editprescriber' npi=prescriber.npi fname=prescriber.fname lname=prescriber.lname %}">
+    <form name="form" class="row g-3" method="post" action="{% url 'editprescriber' npi=prescriber.npi fname=prescriber.fname lname=prescriber.lname %}">
         {% csrf_token %}
-        <div class="row">
-            <div class="col">
-                <div class="mb-3">
-                    <label for="prescriberFirstName" class="form-label">First Name</label>
-                    <input type="text" class="form-control" name="prescriberFirstName" value="{{prescriber.fname}}">
-                </div>
-            </div>
-            
-            <div class="col">
-                <div class="mb-3">
-                    <label for="prescriberLastName" class="form-label">Last Name</label>
-                    <input type="text" class="form-control" name="prescriberLastName" value="{{prescriber.lname}}">
-                </div>
-            </div>
+        <div class="col-md-6">
+            <label for="prescriberFirstName" class="form-label">First Name</label>
+            <input type="text" class="form-control" name="prescriberFirstName" value="{{prescriber.fname}}">
         </div>
+
+        <div class="col-md-6">
+            <label for="prescriberLastName" class="form-label">Last Name</label>
+            <input type="text" class="form-control" name="prescriberLastName" value="{{prescriber.lname}}">
+        </div>
+    
+        <div class="col-md-6">
+            <label for="prescriberGender" class="form-label">Gender</label>
+            <select class="form-select" name="prescriberGender" aria-label="gender of prescriber">
+                <option value="M" {% if prescriber.gender.lower == 'm' %} selected {% endif %}>Male</option>
+                <option value="F" {% if prescriber.gender.lower == 'f' %} selected {% endif %}>Female</option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label for="prescriberState" class="form-label">State</label>
+            <select class="form-select" name="prescriberState" aria-label="state of prescriber">
+                {% for state in states %}
+                    {% if prescriber.state_id == state.stateabbrev %}
+                        <option value="{{state.stateabbrev}}" selected>{{state.stateabbrev}}</option>
+                    {% else %}
+                        <option value="{{state.stateabbrev}}">{{state.stateabbrev}}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label for="prescriberNPI" class="form-label">National Provider Number</label>
+            <input type="text" class="form-control" name="prescriberNPI" value="{{prescriber.npi}}" disabled>
+        </div>
+
+        <div class="col-md-6">
+            <label for="prescriberCredentials" class="form-label">Credentials</label>
+            <select class="form-select" name="prescriberCredentials" aria-label="credentials of prescriber">
+                <option value="None" disabled selected> {% if prescriber.credentials != None %} ------- {% else %} Nince {% endif %}</option>
+                {% for credential in credentials %}
+                    <option value="{{credential.id}}">{{credential.credentials}}</option>
+                {% endfor %}
+            </select>
+
+            {% for credential in prescriber.credentials.all %}
+                <span class="badge bg-primary mt-2">{{credential.credentials}}</span>
+            {% endfor %}
+        </div>
+
+        <div class="col-md-6">
+            <label for="prescriberSpecialty" class="form-label">Specialty</label>
+            <input type="text" class="form-control" name="prescriberSpecialty" value="{{prescriber.specialty}}">
+        </div>
+
         
-        <div class="row">
-            <div class="col">
-                <div class="mb-3">
-                    <label for="prescriberGender" class="form-label">Gender</label>
-                    <select class="form-select" name="prescriberGender" aria-label="gender of prescriber">
-                        <option value="M" {% if prescriber.gender.lower == 'm' %} selected {% endif %}>Male</option>
-                        <option value="F" {% if prescriber.gender.lower == 'f' %} selected {% endif %}>Female</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="mb-3">
-                    <label for="prescriberState" class="form-label">State</label>
-                    <select class="form-select" name="prescriberState" aria-label="state of prescriber">
-                        {% for state in states %}
-                            {% if prescriber.state_id == state.stateabbrev %}
-                                <option value="{{state.stateabbrev}}" selected>{{state.stateabbrev}}</option>
-                            {% else %}
-                                <option value="{{state.stateabbrev}}">{{state.stateabbrev}}</option>
-                            {% endif %}
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <div class="mb-3">
-                    <label for="prescriberNPI" class="form-label">National Provider Number</label>
-                    <input type="text" class="form-control" name="prescriberNPI" value="{{prescriber.npi}}" disabled>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="mb-3">
-                    <label for="prescriberCredentials" class="form-label">Credentials</label>
-                    <select class="form-select" name="prescriberCredentials" aria-label="credentials of prescriber">
-                        <option value="None" disabled selected> {% if prescriber.credentials != None %} ------- {% else %} Nince {% endif %}</option>
-                        {% for credential in credentials %}
-                            <option value="{{credential.id}}">{{credential.credentials}}</option>
-                        {% endfor %}
-                    </select>
-
-                    {% for credential in prescriber.credentials.all %}
-                        <span class="badge bg-primary mt-2">{{credential.credentials}}</span>
-                    {% endfor %}
-                </div>
-
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <div class="mb-3">
-                    <label for="prescriberSpecialty" class="form-label">Specialty</label>
-                    <input type="text" class="form-control" name="prescriberSpecialty" value="{{prescriber.specialty}}">
-                </div>
-            </div>
-            
-            <div class="col">
-                <div class="mb-3">
-                    <label for="prescriberTotalPrescriptions" class="form-label">Total Drugs Prescribed</label>
-                    <input type="number" class="form-control" name="prescriberTotalPrescriptions" value='{{prescriber.totalprescriptions}}'>
-                </div>
-            </div>
+        <div class="col-md-6">
+            <label for="prescriberTotalPrescriptions" class="form-label">Total Drugs Prescribed</label>
+            <input type="number" class="form-control" name="prescriberTotalPrescriptions" value='{{prescriber.totalprescriptions}}'>
         </div>
 
         <div class="mb-5">

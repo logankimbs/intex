@@ -2,88 +2,64 @@
 
 <div class="container">
     <h2 class="mb-4">Create Prescriber</h2>
-    <form name="form" method="post" action="{% url 'createprescriber' %}">
+    <form name="form" class="row g-3" method="post" action="{% url 'createprescriber' %}">
         {% csrf_token %}
-        <div class="row">
-            <div class="col">
-                <div class="mb-3">
-                    <label for="prescriberFirstName" class="form-label">First Name</label>
-                    <input type="text" class="form-control" name="prescriberFirstName" required>
-                </div>
-            </div>
-            
-            <div class="col">
-                <div class="mb-3">
-                    <label for="prescriberLastName" class="form-label">Last Name</label>
-                    <input type="text" class="form-control" name="prescriberLastName" required>
-                </div>
-            </div>
+        <div class="col-md-6">
+            <label for="prescriberFirstName" class="form-label">First Name</label>
+            <input type="text" class="form-control" name="prescriberFirstName" required>
         </div>
         
-        <div class="row">
-            <div class="col">
-                <div class="mb-3">
-                    <label for="prescriberGender" class="form-label">Gender</label>
-                    <select class="form-select" name="prescriberGender" aria-label="gender of prescriber" required>
-                        <option value="" disabled selected>None</option>
-                        <option value="M">Male</option>
-                        <option value="F">Female</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="mb-3">
-                    <label for="prescriberState" class="form-label">State</label>
-                    <select class="form-select" name="prescriberState" aria-label="state of prescriber" required>
-                        <option value="" disabled selected>None</option>
-                        {% for state in states %}
-                            <option value="{{state.stateabbrev}}">{{state.stateabbrev}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
+        <div class="col-md-6">
+            <label for="prescriberLastName" class="form-label">Last Name</label>
+            <input type="text" class="form-control" name="prescriberLastName" required>
+        </div>
+    
+        <div class="col-md-6">
+            <label for="prescriberGender" class="form-label">Gender</label>
+            <select class="form-select" name="prescriberGender" aria-label="gender of prescriber" required>
+                <option value="" disabled selected>None</option>
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+            </select>
         </div>
 
-        <div class="row">
-            <div class="col">
-                <div class="mb-3">
-                    <label for="prescriberNPI" class="form-label">National Provider Number</label>
-                    <input type="text" class="form-control" name="prescriberNPI" aria-describedby="npiHelp" required>
-                    <div name="npiHelp" class="form-text">A National Provider Identifier is a unique 10-digit identification number issued to health care providers</div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="mb-3">
-                    <label for="prescriberCredentials" class="form-label">Credentials</label>
-                    <select class="form-select" name="prescriberCredentials" aria-label="credentials of prescriber" required>
-                        <option value="" disabled selected>None</option>
-                        {% for credential in credentials %}
-                            <option value="{{credential.id}}">{{credential.credentials}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
+        <div class="col-md-6">
+            <label for="prescriberState" class="form-label">State</label>
+            <select class="form-select" name="prescriberState" aria-label="state of prescriber" required>
+                <option value="" disabled selected>None</option>
+                {% for state in states %}
+                    <option value="{{state.stateabbrev}}">{{state.stateabbrev}}</option>
+                {% endfor %}
+            </select>
         </div>
 
-        <div class="row">
-            <div class="col">
-                <div class="mb-3">
-                    <label for="prescriberSpecialty" class="form-label">Specialty</label>
-                    <input type="text" class="form-control" name="prescriberSpecialty">
-                </div>
-            </div>
-            
-            <div class="col">
-                <div class="mb-3">
-                    <label for="prescriberTotalPrescriptions" class="form-label">Total Drugs Prescribed</label>
-                    <input type="number" class="form-control" name="prescriberTotalPrescriptions" required>
-                </div>
-            </div>
+        <div class="col-md-6">
+            <label for="prescriberNPI" class="form-label">National Provider Number</label>
+            <input type="text" class="form-control" name="prescriberNPI" aria-describedby="npiHelp" required>
+            <div name="npiHelp" class="form-text">A National Provider Identifier is a unique 10-digit identification number issued to health care providers</div>
         </div>
 
-        <div class="mb-4">
+        <div class="col-md-6">
+            <label for="prescriberCredentials" class="form-label">Credentials</label>
+            <select class="form-select" name="prescriberCredentials" aria-label="credentials of prescriber" required>
+                <option value="" disabled selected>None</option>
+                {% for credential in credentials %}
+                    <option value="{{credential.id}}">{{credential.credentials}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label for="prescriberSpecialty" class="form-label">Specialty</label>
+            <input type="text" class="form-control" name="prescriberSpecialty">
+        </div>
+        
+        <div class="col-md-6">
+            <label for="prescriberTotalPrescriptions" class="form-label">Total Drugs Prescribed</label>
+            <input type="number" class="form-control" name="prescriberTotalPrescriptions" required>
+        </div>
+
+        <div class="col-md-12">
             <label for="prescriberOpioidAuthorization" class="form-label">Is this individual authorized to prescribe opioids?</label>
             <select class="form-select" name="authorization" aria-label="opioid authorization" required>
                 <option value="" disabled selected>None</option>
@@ -91,7 +67,8 @@
                 <option value="FALSE">False</option>
             </select>
         </div>
-        <div class="d-flex justify-content-end gap-2">
+
+        <div class="d-flex justify-content-end gap-2 mt-5 mb-5">
             <button type="button" class="btn btn-secondary" onclick="location.href='{% url 'prescribers' %}'">Cancel</button>
             <button type="submit" class="btn btn-success">Create</button>
         </div>
